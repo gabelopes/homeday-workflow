@@ -7,5 +7,6 @@
 
 @mixin Mulish {
     @include Mulish.fontFace($weight: 400);
+    @include Mulish.fontFace($weight: 600);
     @include Mulish.fontFace($weight: 700);
 }

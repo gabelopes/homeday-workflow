@@ -1,0 +1,20 @@
+// Official Palette
+$white: #fff;
+$black: #000;
+$red: #fe4440;
+$gray: #f6f6f6;
+$light-gray: #e4e8ee;
+$medium-gray: #d4d4d4;
+$dark-gray: #969696;
+$green: #6fce99;
+$blue: #005794;
+$dark-blue: #03428d;
+$yellow: #fecd03;
+
+$primary-background-color: $white;
+$secondary-background-color: $gray;
+
+$primary-button-color: $dark-blue;
+$primary-button-active-color: lighten($primary-button-color, 10%);
+$secondary-button-color: $dark-gray;
+$secondary-button-active-color: darken($secondary-button-color, 25%);
