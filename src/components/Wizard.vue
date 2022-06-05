@@ -7,32 +7,36 @@
         </transition>
       </div>
 
-      <StepSelector v-show="isSplit" v-model="currentStepIndex" :selected-index="currentStepIndex" :steps="steps" />
+      <StepSelector v-show="isSplit" :selected-index="currentStepIndex" :steps="steps" />
 
-      <div v-if="!isSplit && !isLastStep" class="wizard__stage-controls">
-        <Button v-if="!isFirstStep" @click="previousStep" type="secondary">{{ $t("wizard.previousStep") }}</Button>
+      <transition name="fade">
+        <div v-if="!isSplit && !isLastStep" class="wizard__stage-controls">
+          <Button v-if="!isFirstStep" @click="previousStep" type="secondary">{{ $t("wizard.previousStep") }}</Button>
 
-        <Button @click="nextStep" :disabled="!isCurrentStepValid" data-test="next-button">
-          {{ isFirstStep ? $t("wizard.start") : $t("wizard.nextStep") }}
-        </Button>
-      </div>
+          <Button @click="nextStep" :disabled="!isCurrentStepValid" data-test="next-button">
+            {{ isFirstStep ? $t("wizard.start") : $t("wizard.nextStep") }}
+          </Button>
+        </div>
+      </transition>
     </div>
 
     <transition name="reveal">
       <div v-if="isSplit" class="wizard__stage wizard__stage--secondary">
         <div class="wizard__stage-component wizard__stage-component--secondary">
           <transition appear mode="out-in" name="fade-slide">
-            <component :is="currentStep.mainComponent" />
+            <component :is="currentStep.mainComponent" :validation="validationResults" />
           </transition>
         </div>
 
-        <div v-if="!isLastStep" class="wizard__stage-controls">
-          <Button v-if="!isFirstStep" @click="previousStep" type="secondary">{{ $t("wizard.previousStep") }}</Button>
+        <transition name="fade">
+          <div v-if="!isLastStep" class="wizard__stage-controls">
+            <Button v-if="!isFirstStep" @click="previousStep" type="secondary">{{ $t("wizard.previousStep") }}</Button>
 
-          <Button @click="nextStep" :disabled="!isCurrentStepValid" data-test="next-button">
-            {{ isBeforeLastStep ? $t("wizard.done") : $t("wizard.nextStep") }}
-          </Button>
-        </div>
+            <Button @click="nextStep" :disabled="!isCurrentStepValid" data-test="next-button">
+              {{ isBeforeLastStep ? $t("wizard.done") : $t("wizard.nextStep") }}
+            </Button>
+          </div>
+        </transition>
       </div>
     </transition>
   </div>
@@ -124,7 +128,7 @@
   @import "@/styles/variables/_colors.scss";
   @import "@/styles/variables/_transitions.scss";
 
-  @include fade();
+  @include fade(0.25s);
   @include fade-slide();
   @include reveal();
 
@@ -150,6 +154,14 @@
 
         background-color: $primary-background-color;
         flex-shrink: 0;
+
+        @include mobile() {
+          padding-bottom: 50px;
+        }
+
+        @include tablet() {
+          padding-right: 50px;
+        }
       }
 
       &--secondary {
@@ -183,7 +195,7 @@
 
         @include mobile() {
           height: 25%;
-          min-height: 100px;
+          min-height: 300px;
         }
 
         @include tablet() {
