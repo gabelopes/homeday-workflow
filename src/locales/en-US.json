@@ -1,1 +1,11 @@
-{}
+{
+  "stepSelector": {
+    "stepNumber": "Step {0}"
+  },
+  "wizard": {
+    "done": "Done",
+    "nextStep": "Next Step",
+    "previousStep": "Previous Step",
+    "start": "Start"
+  }
+}
