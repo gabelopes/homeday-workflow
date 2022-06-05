@@ -1,30 +1,30 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
   <router-view />
 </template>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+  @import "@/styles/mixins/_layout.scss";
+  @import "@/styles/mixins/_fonts.scss";
 
-nav {
-  padding: 30px;
+  @include Arvo();
+  @include Mulish();
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+  * {
+    box-sizing: border-box;
   }
-}
+
+  html,
+  body {
+    @include box(100%);
+
+    padding: 0;
+    margin: 0;
+  }
+
+  #app {
+    font-family: "Mulish", sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 </style>

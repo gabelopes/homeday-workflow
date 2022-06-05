@@ -1,0 +1,17 @@
+@mixin box($width, $height: $width) {
+    height: $height;
+    width: $width;
+}
+
+@mixin flex-box($horizontalAlignment: normal, $verticalAlignment: normal, $direction: row) {
+    display: flex;
+    flex-direction: $direction;
+
+    @if ($direction == row) {
+        align-items: $verticalAlignment;
+        justify-content: $horizontalAlignment;
+    } @else if ($direction == column) {
+        align-items: $horizontalAlignment;
+        justify-content: $verticalAlignment;
+    }
+}
