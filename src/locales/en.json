@@ -1,4 +1,23 @@
 {
+  "agreementSidestep": {
+    "intro": "Step 3",
+    "title": "Licence Agreement",
+    "description": "In this step, we will gather your email for future contact as well as your consent to our policies."
+  },
+  "homeStep": {
+    "intro": "Intro",
+    "title": "Let's get to know you"
+  },
+  "personalSidestep": {
+    "intro": "Step 2",
+    "title": "Personal Details",
+    "description": "First, let's know what your name is and your GitHub profile. This information is only used to display your profile in a beautiful frame later!"
+  },
+  "personalStep": {
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "gitHubUser": "GitHub User"
+  },
   "stepSelector": {
     "stepNumber": "Step {0}"
   },
