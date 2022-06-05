@@ -18,10 +18,6 @@
 <script>
   export default {
     name: "StepSelector",
-    model: {
-      prop: "selectedIndex",
-      event: "change:stepIndex"
-    },
     props: {
       selectedIndex: {
         type: Number,
