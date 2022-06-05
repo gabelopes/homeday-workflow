@@ -38,7 +38,8 @@
     }
   }
 
-  button {
+  button,
+  input {
     font-family: "Mulish", sans-serif;
     font-size: 1rem;
     font-weight: $regular-weight;
