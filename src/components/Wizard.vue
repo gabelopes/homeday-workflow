@@ -129,6 +129,7 @@
   @import "@/styles/mixins/_layout.scss";
   @import "@/styles/mixins/_transitions.scss";
   @import "@/styles/variables/_colors.scss";
+  @import "@/styles/variables/_layout.scss";
   @import "@/styles/variables/_steps.scss";
   @import "@/styles/variables/_transitions.scss";
 
@@ -138,10 +139,10 @@
 
   .wizard {
     @include box(100%);
-    @include flex-box(center, center, $direction: column);
+    @include flex-box($direction: column);
 
     @include tablet() {
-      @include flex-box(center, center);
+      @include flex-box();
     }
 
     &--split {
@@ -150,49 +151,52 @@
     }
 
     &__stage {
-      position: relative;
-
       &--primary {
         @include box(100%);
         @include flex-box(center, center, column);
 
         background-color: $primary-background-color;
         flex-shrink: 0;
+        position: relative;
 
         @include mobile() {
-          padding-bottom: $step-size-mobile / 2;
+          padding-bottom: $step-outer-border-size + $step-size-mobile / 2;
         }
 
         @include tablet() {
-          padding-right: $step-size-tablet / 2;
+          padding-right: $step-outer-border-size + $step-size-tablet / 2;
         }
 
         @include desktop() {
-          padding-right: $step-size-desktop / 2;
+          padding-right: $step-outer-border-size + $step-size-desktop / 2;
         }
       }
 
       &--secondary {
         @include box(100%);
-        @include flex-box(center, center, column);
+        @include flex-box($verticalAlignment: space-between, $direction: column);
+
+        overflow: hidden auto;
 
         @include mobile() {
-          padding-top: $step-size-mobile / 2;
+          margin-top: $step-outer-border-size + $step-size-mobile / 2;
         }
 
         @include tablet() {
-          padding-left: $step-size-tablet / 2;
+          margin-left: $step-outer-border-size + $step-size-tablet / 2;
         }
 
         @include desktop() {
-          padding-left: $step-size-desktop / 2;
+          margin-left: $step-outer-border-size + $step-size-desktop / 2;
         }
       }
 
       &--secondary & {
         &-component {
-          @include box(100%);
           @include flex-box(center, center);
+
+          overflow: hidden auto;
+          width: 100%;
         }
 
         &-controls {
@@ -208,16 +212,16 @@
 
         @include mobile() {
           height: 25%;
-          min-height: 300px;
+          min-height: $space * 65;
         }
 
         @include tablet() {
-          min-width: 300px;
+          min-width: $space * 75;
           width: 25%;
         }
 
         @include desktop() {
-          min-width: 400px;
+          min-width: $space * 85;
           width: 25%;
         }
       }

@@ -65,8 +65,9 @@
 
   .personal-step {
     @include box(100%);
-    @include flex-box(flex-start, center, column);
     @include padding();
+
+    overflow: hidden auto;
 
     @include desktop() {
       @include box(75%, 100%);

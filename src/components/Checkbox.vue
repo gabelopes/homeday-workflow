@@ -18,8 +18,7 @@
           'checkbox__label--error': isError
         }"
       >
-        {{ label }}
-        <sup class="checkbox__label-required">*</sup>
+        <span>{{ label }}<sup class="checkbox__label-required">*</sup></span>
       </label>
     </div>
 
@@ -82,7 +81,7 @@
   @import "@/styles/variables/_fonts.scss";
 
   .checkbox {
-    @include flex-box($direction: column);
+    @include flex-box(flex-start, $direction: column);
 
     &__label {
       font-weight: $bold-weight;
@@ -104,7 +103,7 @@
     }
 
     &__label {
-      @include flex-box($verticalAlignment: center);
+      @include flex-box($verticalAlignment: flex-start);
 
       &::before {
         @include box($sizing * 4);
@@ -113,18 +112,20 @@
         content: "";
         border: $border-width solid $dark-gray;
         border-radius: 20%;
-        margin-right: $space;
+        margin-right: $space * 2;
+        position: relative;
+        top: $space;
 
         @include tablet() {
           @include box($sizing * 5);
 
-          margin-right: $space * 2;
+          margin-right: $space * 3;
         }
 
         @include tablet() {
           @include box($sizing * 6);
 
-          margin-right: $space * 3;
+          margin-right: $space * 4;
         }
       }
 
