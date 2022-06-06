@@ -19,6 +19,7 @@
   import OverviewStep from "@/components/steps/OverviewStep.vue";
   import { markRaw } from "vue";
   import { mapGetters } from "vuex";
+  import { email, required } from "@/validators";
 
   export default {
     name: "HomeView",
@@ -37,30 +38,13 @@
             sideComponent: markRaw(PersonalSidestep),
             mainComponent: markRaw(PersonalStep),
             validator: () => {
-              const validationResults = [];
+              const requiredMessage = this.$t("validation.required");
 
-              if (!this.firstName) {
-                validationResults.push({
-                  code: "firstName",
-                  errorMessage: this.$t("validation.required")
-                });
-              }
-
-              if (!this.lastName) {
-                validationResults.push({
-                  code: "lastName",
-                  errorMessage: this.$t("validation.required")
-                });
-              }
-
-              if (!this.gitHubUser) {
-                validationResults.push({
-                  code: "gitHubUser",
-                  errorMessage: this.$t("validation.required")
-                });
-              }
-
-              return validationResults;
+              return [
+                ...this.validate(this.firstName, required, "firstName", requiredMessage),
+                ...this.validate(this.lastName, required, "lastName", requiredMessage),
+                ...this.validate(this.gitHubUser, required, "gitHubUser", requiredMessage)
+              ];
             }
           },
           {
@@ -68,31 +52,13 @@
             sideComponent: markRaw(AgreementSidestep),
             mainComponent: markRaw(AgreementStep),
             validator: () => {
-              const validationResults = [];
-              const emailRegEx = /[\w\d.-]+?@[\w\d.-]+/;
+              const requiredMessage = this.$t("validation.required");
 
-              if (!this.email) {
-                validationResults.push({
-                  code: "email",
-                  errorMessage: this.$t("validation.required")
-                });
-              }
-
-              if (this.email && !emailRegEx.test(this.email)) {
-                validationResults.push({
-                  code: "email",
-                  errorMessage: this.$t("validation.invalidEmail")
-                });
-              }
-
-              if (!this.consent) {
-                validationResults.push({
-                  code: "licenceAgreement",
-                  errorMessage: this.$t("validation.required")
-                });
-              }
-
-              return validationResults;
+              return [
+                ...this.validate(this.email, required, "email", requiredMessage),
+                ...this.validate(this.email, email, "email", this.$t("validation.invalidEmail")),
+                ...this.validate(this.consent, required, "licenceAgreement", requiredMessage)
+              ];
             }
           },
           {
@@ -112,6 +78,10 @@
 
       handleStepRollback({ code }) {
         this.$router.replace(`/${code}`);
+      },
+
+      validate(prop, validator, code, errorMessage) {
+        return validator(prop) ? [] : [{ code, errorMessage }];
       }
     }
   };
