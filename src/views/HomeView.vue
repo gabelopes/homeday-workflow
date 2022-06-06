@@ -1,6 +1,11 @@
 <template>
   <div class="home-view">
-    <Wizard :steps="steps" />
+    <Wizard
+      :steps="steps"
+      :step="$route.params.step"
+      @commit:step="handleStepCommit"
+      @rollback:step="handleStepRollback"
+    />
   </div>
 </template>
 
@@ -99,6 +104,15 @@
     },
     computed: {
       ...mapGetters(["firstName", "lastName", "gitHubUser", "email", "consent"])
+    },
+    methods: {
+      handleStepCommit({ code }) {
+        this.$router.push(`/${code}`);
+      },
+
+      handleStepRollback({ code }) {
+        this.$router.replace(`/${code}`);
+      }
     }
   };
 </script>
