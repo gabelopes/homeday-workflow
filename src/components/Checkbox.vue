@@ -11,14 +11,17 @@
       />
 
       <label
-        :for="id"
         class="checkbox__label"
+        tabindex="0"
         :class="{
           'checkbox__label--checked': checked,
+          'checkbox__label--required': required,
           'checkbox__label--error': isError
         }"
+        :for="id"
+        @keyup.space.exact="toggle"
       >
-        <span>
+        <span class="checkbox__label-text">
           {{ label }}
           <sup v-if="required" class="checkbox__label-required" data-test="required-asterisk">*</sup>
         </span>
@@ -68,6 +71,11 @@
       }
     },
     methods: {
+      toggle() {
+        this.$emit("update", !this.checked);
+        this.dirty = true;
+      },
+
       handleChange(event) {
         this.$emit("update", event.target.checked);
         this.dirty = true;
@@ -108,6 +116,8 @@
     &__label {
       @include flex-box($verticalAlignment: flex-start);
 
+      outline: 0;
+
       &::before {
         @include box($sizing * 4);
         @include flex-box(center, center, $inline: true);
@@ -117,7 +127,6 @@
         border-radius: 20%;
         margin-right: $space * 2;
         position: relative;
-        top: $space;
 
         @include tablet() {
           @include box($sizing * 5);
@@ -132,23 +141,68 @@
         }
       }
 
+      &:not(&--error) {
+        &:focus::before,
+        &:hover::before {
+          border-color: $darkest-gray;
+        }
+      }
+
+      &:not(&--required) & {
+        &-text {
+          margin-top: $space;
+        }
+      }
+
       &--checked {
         &::before {
-          @include font-size($medium-font);
-
           background-color: $dark-gray;
-          color: $white;
-          content: "\00d7";
 
           @include tablet() {
             @include font-size($big-font);
           }
+        }
+
+        &::after {
+          @include box($sizing * 4);
+          @include flex-box(center, center);
+          @include font-size($big-font);
+
+          border: $border-width solid transparent;
+          color: $white;
+          content: "\00d7";
+          margin-top: -$border-width;
+          position: absolute;
+
+          @include tablet() {
+            @include box($sizing * 5);
+          }
+
+          @include tablet() {
+            @include box($sizing * 6);
+          }
+        }
+
+        &:focus::before,
+        &:hover::before {
+          background-color: $darkest-gray;
+        }
+      }
+
+      &--required & {
+        &-text {
+          margin-top: -$space;
         }
       }
 
       &--error {
         &::before {
           border-color: $red;
+        }
+
+        &:focus::before,
+        &:hover::before {
+          border-color: $dark-red;
         }
       }
     }
@@ -157,6 +211,7 @@
       @include font-size($small-font);
 
       color: $red;
+      margin-top: $space * 2;
     }
   }
 </style>

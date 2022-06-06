@@ -15,20 +15,20 @@
   "personalSidestep": {
     "intro": "Step 2",
     "title": "Personal Details",
-    "description": "First, let's know what your name is and your GitHub profile. This information is only used to display your profile in a beautiful frame later!"
+    "description": "First, let's know what your name is and your GitHub profile. This information is only used to display your profile!"
   },
   "personalStep": {
     "firstName": "First Name",
     "lastName": "Last Name",
     "gitHubUser": "GitHub User"
   },
-  "stepSelector": {
-    "stepNumber": "Step {0}"
-  },
   "overviewStep": {
     "intro": "Enjoy",
     "title": "You are all set!",
     "pictureAlt": "GitHub user {0}"
+  },
+  "userCard": {
+    "notFound": "GitHub user not found, you can change it later"
   },
   "validation": {
     "required": "This field is required",
