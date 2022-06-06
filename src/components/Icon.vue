@@ -1,5 +1,5 @@
 <template>
-  <img :src="require(`@/assets/${name}-${variant}.webp`)" alt="" class="icon" :class="`icon--${size}`" />
+  <img v-lazy="require(`@/assets/${name}-${variant}.webp`)" alt="" class="icon" :class="`icon--${size}`" />
 </template>
 
 <script>
