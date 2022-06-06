@@ -2,7 +2,7 @@
   <div class="home-step">
     <Icon name="chat" size="big" variant="side" />
 
-    <TagLabel class="tag-label">{{ $t("homeStep.intro") }}</TagLabel>
+    <TagLabel>{{ $t("homeStep.intro") }}</TagLabel>
 
     <h1 class="home-step__title">
       {{ $t("homeStep.title") }}
