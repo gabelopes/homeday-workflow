@@ -1,7 +1,7 @@
 <template>
   <ul class="step-indicator">
     <li
-      v-for="({ code, icon }, index) in steps"
+      v-for="({ code }, index) in steps"
       :key="code"
       class="step-indicator__step"
       :class="{
@@ -9,8 +9,7 @@
         'step-indicator__step--current': selectedIndex === index
       }"
     >
-      <img v-if="icon" :src="icon" :alt="$t('stepSelector.stepNumber', [index + 1])" />
-      <span v-else>{{ index + 1 }}</span>
+      {{ index + 1 }}
     </li>
   </ul>
 </template>
