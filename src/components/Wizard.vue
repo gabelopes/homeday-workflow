@@ -24,7 +24,7 @@
       <div v-if="isSplit" class="wizard__stage wizard__stage--secondary">
         <div class="wizard__stage-component wizard__stage-component--secondary">
           <transition appear mode="out-in" name="fade-slide">
-            <component :is="currentStep.mainComponent" :validation="validationResults" />
+            <component :is="currentStep.mainComponent" :validation="currentValidationResults" />
           </transition>
         </div>
 
@@ -48,6 +48,7 @@
 
   export default {
     name: "Wizard",
+    emits: ["commit:step", "rollback:step"],
     components: {
       Button,
       StepIndicator
@@ -59,20 +60,37 @@
         validator(steps) {
           return steps.length && steps.every(({ code, mainComponent }) => code && mainComponent);
         }
+      },
+      step: {
+        type: String,
+        required: false
       }
     },
-
     computed: {
       currentStep() {
         return this.steps[this.currentStepIndex] ?? {};
       },
 
+      currentStepIndex() {
+        const stepIndex = this.getStepIndex(this.step);
+
+        return this.isInStepsRange(stepIndex) ? stepIndex : 0;
+      },
+
       currentValidator() {
-        return this.currentStep.validator ?? (() => []);
+        return this.getValidator(this.currentStep);
+      },
+
+      currentValidationResults() {
+        return this.currentValidator();
       },
 
       isBeforeLastStep() {
         return this.currentStepIndex === this.steps.length - 2;
+      },
+
+      isCurrentStepValid() {
+        return this.isValidationSuccessful(this.currentValidationResults);
       },
 
       isFirstStep() {
@@ -87,38 +105,81 @@
         return !!this.currentStep?.sideComponent;
       },
 
-      isCurrentStepValid() {
-        return this.validationResults?.length === 0;
-      },
-
       sideComponent() {
         const { mainComponent, sideComponent } = this.currentStep ?? {};
 
         return this.isSplit ? sideComponent : mainComponent;
-      },
-
-      validationResults() {
-        return this.currentValidator();
       }
     },
-
-    data() {
-      return {
-        currentStepIndex: 0
-      };
-    },
-
     methods: {
-      nextStep() {
-        if (this.currentStepIndex < this.steps.length - 1) {
-          this.currentStepIndex += 1;
+      commitStep(stepIndex) {
+        this.mutateStep(stepIndex, "commit:step");
+      },
+
+      configureStep() {
+        const stepIndex = this.getStepIndex(this.step);
+        const invalidStepIndex = this.findInvalidStepIndexBefore(stepIndex);
+
+        if (invalidStepIndex >= 0) {
+          this.rollbackStep(invalidStepIndex);
+        } else {
+          this.commitStep(stepIndex);
         }
+      },
+
+      findInvalidStepIndexBefore(stepIndex) {
+        if (stepIndex < 0) {
+          return -1;
+        }
+
+        return this.steps.slice(0, stepIndex).findIndex((step) => {
+          const validator = this.getValidator(step);
+          const validationResults = validator();
+
+          return !this.isValidationSuccessful(validationResults);
+        });
+      },
+
+      getStepIndex(stepCode) {
+        return this.steps.findIndex(({ code }) => code === stepCode);
+      },
+
+      getValidator({ validator }) {
+        return validator ?? (() => []);
+      },
+
+      isInStepsRange(stepIndex) {
+        return stepIndex >= 0 && stepIndex < this.steps.length;
+      },
+
+      isValidationSuccessful(validationResults) {
+        return Array.isArray(validationResults) && validationResults.length === 0;
+      },
+
+      mutateStep(stepIndex, event) {
+        if (this.isInStepsRange(stepIndex)) {
+          this.$emit(event, this.steps[stepIndex]);
+        }
+      },
+
+      nextStep() {
+        this.commitStep(this.currentStepIndex + 1);
       },
 
       previousStep() {
-        if (this.currentStepIndex > 0) {
-          this.currentStepIndex -= 1;
-        }
+        this.commitStep(this.currentStepIndex - 1);
+      },
+
+      rollbackStep(stepIndex) {
+        this.mutateStep(stepIndex, "rollback:step");
+      }
+    },
+    created() {
+      this.configureStep();
+    },
+    watch: {
+      step() {
+        this.configureStep();
       }
     }
   };
