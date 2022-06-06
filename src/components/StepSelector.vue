@@ -18,10 +18,6 @@
 <script>
   export default {
     name: "StepSelector",
-    model: {
-      prop: "selectedIndex",
-      event: "change:stepIndex"
-    },
     props: {
       selectedIndex: {
         type: Number,
@@ -39,19 +35,13 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "@/styles/mixins/_layout.scss";
   @import "@/styles/mixins/_breakpoints.scss";
+  @import "@/styles/mixins/_fonts.scss";
+  @import "@/styles/mixins/_layout.scss";
   @import "@/styles/variables/_colors.scss";
   @import "@/styles/variables/_fonts.scss";
+  @import "@/styles/variables/_steps.scss";
   @import "@/styles/variables/_transitions.scss";
-
-  $inner-border-size-small: 10px;
-  $inner-border-size: 15px;
-  $outer-border-size: 3px;
-  $spacing-small: 40px;
-  $spacing: 50px;
-  $size-small: 50px;
-  $size: 75px;
 
   .step-selector {
     margin: 0;
@@ -72,57 +62,58 @@
     position: absolute;
 
     &__step {
-      @include box($size-small);
+      @include box($step-size-mobile);
       @include flex-box(center, center);
+      @include font-size($medium-font);
 
       background-color: $white;
-      border: $inner-border-size-small solid $light-gray;
+      border: $step-inner-border-size-mobile solid $light-gray;
       border-radius: 100%;
-      box-shadow: 0 0 0 $outer-border-size $medium-gray;
+      box-shadow: 0 0 0 $step-outer-border-size $medium-gray;
       color: $medium-gray;
-      font-size: 1.2rem;
       font-weight: $medium-weight;
       transform: translateY(50%);
       transition: box-shadow $half-transition-duration;
 
       @include tablet() {
+        @include box($step-size-tablet);
+
         transform: translateX(50%);
+        border-width: $step-inner-border-size-tablet;
       }
 
       @include desktop() {
-        @include box($size);
+        @include box($step-size-desktop);
 
-        border: $inner-border-size solid $light-gray;
-        font-size: 1.4rem;
-        transform: translateX(50%);
+        border-width: $step-inner-border-size-desktop;
       }
 
       &:not(:last-child) {
         @include mobile() {
-          margin-right: $spacing-small;
+          margin-right: $step-spacing-mobile;
         }
 
         @include tablet() {
-          margin-bottom: $spacing-small;
+          margin-bottom: $step-spacing-tablet;
         }
 
         @include desktop() {
-          margin-bottom: $spacing;
+          margin-bottom: $step-spacing-desktop;
         }
       }
 
       &::before,
       &:last-child::after {
         @include mobile() {
-          @include box($spacing-small - $outer-border-size, $outer-border-size);
+          @include box($step-spacing-mobile - $step-outer-border-size, $step-outer-border-size);
         }
 
         @include tablet() {
-          @include box($outer-border-size, $spacing-small - $outer-border-size);
+          @include box($step-outer-border-size, $step-spacing-tablet - $step-outer-border-size);
         }
 
         @include desktop() {
-          @include box($outer-border-size, $spacing - $outer-border-size);
+          @include box($step-outer-border-size, $step-spacing-desktop - $step-outer-border-size);
         }
 
         background-color: $medium-gray;
@@ -135,16 +126,16 @@
         transform: translateX(-100%);
 
         @include mobile() {
-          left: -$inner-border-size-small;
+          left: -$step-inner-border-size-mobile;
         }
 
         @include tablet() {
-          top: -$inner-border-size-small;
+          top: -$step-inner-border-size-tablet;
           transform: translateY(-100%);
         }
 
         @include desktop() {
-          top: -$inner-border-size;
+          top: -$step-inner-border-size-desktop;
         }
       }
 
@@ -163,22 +154,22 @@
 
         @include mobile() {
           width: 100vw;
-          right: -$inner-border-size-small;
+          right: -$step-inner-border-size-mobile;
         }
 
         @include tablet() {
           height: 100vh;
           transform: translateY(100%);
-          bottom: -$inner-border-size-small;
+          bottom: -$step-inner-border-size-tablet;
         }
 
         @include desktop() {
-          bottom: -$inner-border-size;
+          bottom: -$step-inner-border-size-desktop;
         }
       }
 
       &--complete {
-        box-shadow: 0 0 0 $outer-border-size $green;
+        box-shadow: 0 0 0 $step-outer-border-size $green;
         color: $green;
 
         &::before {
@@ -187,7 +178,7 @@
       }
 
       &--current {
-        box-shadow: 0 0 0 $outer-border-size $blue;
+        box-shadow: 0 0 0 $step-outer-border-size $blue;
         color: $blue;
 
         &::before {

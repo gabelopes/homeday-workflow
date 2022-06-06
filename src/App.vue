@@ -26,25 +26,19 @@
 
   #app {
     @include box(100%);
+    @include font-size();
+    @include sans-serif-font();
 
-    font-family: "Mulish", sans-serif;
-    font-size: 1rem;
     font-weight: $regular-weight;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-
-    @include tablet() {
-      font-size: 1.2rem;
-    }
   }
 
-  button {
-    font-family: "Mulish", sans-serif;
-    font-size: 1rem;
-    font-weight: $regular-weight;
+  button,
+  input {
+    @include font-size();
+    @include sans-serif-font();
 
-    @include tablet() {
-      font-size: 1.2rem;
-    }
+    font-weight: $regular-weight;
   }
 </style>

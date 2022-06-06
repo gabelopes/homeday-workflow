@@ -1,0 +1,15 @@
+@import "@/styles/variables/_layout.scss";
+
+$step-inner-border-size-mobile: $space * 2;
+$step-inner-border-size-tablet: $space * 3;
+$step-inner-border-size-desktop: $space * 4;
+
+$step-outer-border-size: $border-width-fat;
+
+$step-spacing-mobile: $space * 10;
+$step-spacing-tablet: $space * 11;
+$step-spacing-desktop: $space * 12;
+
+$step-size-mobile: $sizing * 10;
+$step-size-tablet: $sizing * 12;
+$step-size-desktop: $sizing * 15;

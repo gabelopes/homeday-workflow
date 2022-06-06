@@ -7,32 +7,36 @@
         </transition>
       </div>
 
-      <StepSelector v-show="isSplit" v-model="currentStepIndex" :selected-index="currentStepIndex" :steps="steps" />
+      <StepSelector v-show="isSplit" :selected-index="currentStepIndex" :steps="steps" />
 
-      <div v-if="!isSplit && !isLastStep" class="wizard__stage-controls">
-        <Button v-if="!isFirstStep" @click="previousStep" type="secondary">{{ $t("wizard.previousStep") }}</Button>
+      <transition name="fade">
+        <div v-if="!isSplit && !isLastStep" class="wizard__stage-controls">
+          <Button v-if="!isFirstStep" @click="previousStep" type="secondary">{{ $t("wizard.previousStep") }}</Button>
 
-        <Button @click="nextStep" :disabled="!isCurrentStepValid" data-test="next-button">
-          {{ isFirstStep ? $t("wizard.start") : $t("wizard.nextStep") }}
-        </Button>
-      </div>
+          <Button @click="nextStep" :disabled="!isCurrentStepValid" data-test="next-button">
+            {{ isFirstStep ? $t("wizard.start") : $t("wizard.nextStep") }}
+          </Button>
+        </div>
+      </transition>
     </div>
 
     <transition name="reveal">
       <div v-if="isSplit" class="wizard__stage wizard__stage--secondary">
         <div class="wizard__stage-component wizard__stage-component--secondary">
           <transition appear mode="out-in" name="fade-slide">
-            <component :is="currentStep.mainComponent" />
+            <component :is="currentStep.mainComponent" :validation="validationResults" />
           </transition>
         </div>
 
-        <div v-if="!isLastStep" class="wizard__stage-controls">
-          <Button v-if="!isFirstStep" @click="previousStep" type="secondary">{{ $t("wizard.previousStep") }}</Button>
+        <transition name="fade">
+          <div v-if="!isLastStep" class="wizard__stage-controls">
+            <Button v-if="!isFirstStep" @click="previousStep" type="secondary">{{ $t("wizard.previousStep") }}</Button>
 
-          <Button @click="nextStep" :disabled="!isCurrentStepValid" data-test="next-button">
-            {{ isBeforeLastStep ? $t("wizard.done") : $t("wizard.nextStep") }}
-          </Button>
-        </div>
+            <Button @click="nextStep" :disabled="!isCurrentStepValid" data-test="next-button">
+              {{ isBeforeLastStep ? $t("wizard.done") : $t("wizard.nextStep") }}
+            </Button>
+          </div>
+        </transition>
       </div>
     </transition>
   </div>
@@ -44,7 +48,10 @@
 
   export default {
     name: "Wizard",
-    components: { Button, StepSelector },
+    components: {
+      Button,
+      StepSelector
+    },
     props: {
       steps: {
         type: Array,
@@ -122,18 +129,20 @@
   @import "@/styles/mixins/_layout.scss";
   @import "@/styles/mixins/_transitions.scss";
   @import "@/styles/variables/_colors.scss";
+  @import "@/styles/variables/_layout.scss";
+  @import "@/styles/variables/_steps.scss";
   @import "@/styles/variables/_transitions.scss";
 
-  @include fade();
+  @include fade($quarter-transition-duration);
   @include fade-slide();
   @include reveal();
 
   .wizard {
     @include box(100%);
-    @include flex-box(center, center, $direction: column);
+    @include flex-box($direction: column);
 
     @include tablet() {
-      @include flex-box(center, center);
+      @include flex-box();
     }
 
     &--split {
@@ -142,32 +151,52 @@
     }
 
     &__stage {
-      position: relative;
-
       &--primary {
         @include box(100%);
         @include flex-box(center, center, column);
 
         background-color: $primary-background-color;
         flex-shrink: 0;
+        position: relative;
+
+        @include mobile() {
+          padding-bottom: $step-outer-border-size + $step-size-mobile / 2;
+        }
+
+        @include tablet() {
+          padding-right: $step-outer-border-size + $step-size-tablet / 2;
+        }
+
+        @include desktop() {
+          padding-right: $step-outer-border-size + $step-size-desktop / 2;
+        }
       }
 
       &--secondary {
         @include box(100%);
-        @include flex-box(center, center, column);
+        @include flex-box($verticalAlignment: space-between, $direction: column);
+
+        overflow: hidden auto;
 
         @include mobile() {
-          padding-top: 50px;
+          margin-top: $step-outer-border-size + $step-size-mobile / 2;
         }
 
         @include tablet() {
-          padding-left: 50px;
+          margin-left: $step-outer-border-size + $step-size-tablet / 2;
+        }
+
+        @include desktop() {
+          margin-left: $step-outer-border-size + $step-size-desktop / 2;
         }
       }
 
       &--secondary & {
         &-component {
-          height: 100%;
+          @include flex-box(center, center);
+
+          overflow: hidden auto;
+          width: 100%;
         }
 
         &-controls {
@@ -178,38 +207,30 @@
       }
 
       &--sidebar {
-        box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.35);
+        box-shadow: 0 0 ($space * 2) 0 rgba(0, 0, 0, 0.35);
         transition: box-shadow $double-transition-duration;
 
         @include mobile() {
           height: 25%;
-          min-height: 100px;
+          min-height: $space * 65;
         }
 
         @include tablet() {
-          min-width: 300px;
+          min-width: $space * 75;
           width: 25%;
         }
 
         @include desktop() {
-          min-width: 400px;
+          min-width: $space * 85;
           width: 25%;
         }
       }
 
       &-controls {
-        padding: 30px;
+        @include padding();
 
         > :not(:last-child) {
-          margin-right: 30px;
-        }
-
-        @include tablet() {
-          padding: 40px;
-        }
-
-        @include desktop() {
-          padding: 80px;
+          margin-right: $space * 5;
         }
       }
     }

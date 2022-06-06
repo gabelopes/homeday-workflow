@@ -1,17 +1,49 @@
+@import "@/styles/mixins/_breakpoints.scss";
+@import "@/styles/variables/_layout.scss";
+
 @mixin box($width, $height: $width) {
-    height: $height;
-    width: $width;
+  height: $height;
+  width: $width;
 }
 
-@mixin flex-box($horizontalAlignment: normal, $verticalAlignment: normal, $direction: row) {
-    display: flex;
-    flex-direction: $direction;
+@mixin flex-box($horizontalAlignment: normal, $verticalAlignment: normal, $direction: row, $inline: false) {
+  flex-direction: $direction;
 
-    @if ($direction == row) {
-        align-items: $verticalAlignment;
-        justify-content: $horizontalAlignment;
-    } @else if ($direction == column) {
-        align-items: $horizontalAlignment;
-        justify-content: $verticalAlignment;
-    }
+  @if ($inline) {
+    display: inline-flex;
+  } @else {
+    display: flex;
+  }
+
+  @if ($direction == row) {
+    align-items: $verticalAlignment;
+    justify-content: $horizontalAlignment;
+  } @else if ($direction == column) {
+    align-items: $horizontalAlignment;
+    justify-content: $verticalAlignment;
+  }
+}
+
+@mixin padding($size: $regular) {
+  padding: $padding-mobile * $size;
+
+  @include tablet() {
+    padding: $padding-tablet * $size;
+  }
+
+  @include desktop() {
+    padding: $padding-desktop * $size;
+  }
+}
+
+@mixin margin($size: $regular) {
+  margin: $margin-mobile * $size;
+
+  @include tablet() {
+    margin: $margin-tablet * $size;
+  }
+
+  @include desktop() {
+    margin: $margin-desktop * $size;
+  }
 }
