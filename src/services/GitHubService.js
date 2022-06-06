@@ -1,8 +1,6 @@
 const GitHubService = {
   async retrieveUser(username) {
-    const response = await fetch(`https://api.github.com/users/${username}`, {
-      mode: "no-cors"
-    });
+    const response = await fetch(`https://api.github.com/users/${username}`);
 
     return response.json();
   }
