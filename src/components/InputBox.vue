@@ -1,20 +1,24 @@
 <template>
   <div class="input-box">
-    <label :for="id" class="input-box__label">{{ label }}</label>
+    <label :for="id" class="input-box__label">
+      {{ label }}
+      <sup class="input-box__label-required">*</sup>
+    </label>
 
     <input
       :class="{
-        'input-box__input--success': !!value && !errorMessage,
-        'input-box__input--error': !!errorMessage
+        'input-box__input--success': isSuccess,
+        'input-box__input--error': isError
       }"
       :id="id"
+      :required="required"
       :value="value"
-      @change="$emit('change', value)"
+      @input="handleInput"
       class="input-box__input"
       type="text"
     />
 
-    <span v-if="errorMessage" class="input-box__error">
+    <span v-if="isError" class="input-box__error">
       {{ errorMessage }}
     </span>
   </div>
@@ -23,7 +27,12 @@
 <script>
   export default {
     name: "InputBox",
+    emits: ["update"],
     props: {
+      errorMessage: {
+        type: String,
+        default: null
+      },
       id: {
         type: String,
         required: true
@@ -32,13 +41,33 @@
         type: String,
         required: true
       },
+      required: {
+        type: Boolean,
+        default: false
+      },
       value: {
         type: String,
         default: ""
+      }
+    },
+    data() {
+      return {
+        dirty: false
+      };
+    },
+    computed: {
+      isSuccess() {
+        return !!this.value && !this.errorMessage;
       },
-      errorMessage: {
-        type: String,
-        default: null
+
+      isError() {
+        return this.dirty && !!this.errorMessage;
+      }
+    },
+    methods: {
+      handleInput(event) {
+        this.$emit("update", event.target.value);
+        this.dirty = true;
       }
     }
   };
