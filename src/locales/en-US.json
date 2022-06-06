@@ -22,9 +22,6 @@
     "lastName": "Last Name",
     "gitHubUser": "GitHub User"
   },
-  "stepSelector": {
-    "stepNumber": "Step {0}"
-  },
   "overviewStep": {
     "intro": "Enjoy",
     "title": "You are all set!",
