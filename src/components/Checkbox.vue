@@ -18,11 +18,14 @@
           'checkbox__label--error': isError
         }"
       >
-        <span>{{ label }}<sup class="checkbox__label-required">*</sup></span>
+        <span>
+          {{ label }}
+          <sup v-if="required" class="checkbox__label-required" data-test="required-asterisk">*</sup>
+        </span>
       </label>
     </div>
 
-    <span v-if="isError" class="checkbox__error">
+    <span v-if="isError" class="checkbox__error" data-test="error-message">
       {{ errorMessage }}
     </span>
   </div>
