@@ -7,7 +7,7 @@
         </transition>
       </div>
 
-      <StepSelector v-show="isSplit" :selected-index="currentStepIndex" :steps="steps" />
+      <StepIndicator v-show="isSplit" :selected-index="currentStepIndex" :steps="steps" />
 
       <transition name="fade-delay-enter">
         <div v-if="!isSplit && !isLastStep" class="wizard__stage-controls">

@@ -1,12 +1,12 @@
 <template>
-  <ul class="step-selector">
+  <ul class="step-indicator">
     <li
       v-for="({ code, icon }, index) in steps"
       :key="code"
-      class="step-selector__step"
+      class="step-indicator__step"
       :class="{
-        'step-selector__step--complete': selectedIndex > index,
-        'step-selector__step--current': selectedIndex === index
+        'step-indicator__step--complete': selectedIndex > index,
+        'step-indicator__step--current': selectedIndex === index
       }"
     >
       <img v-if="icon" :src="icon" :alt="$t('stepSelector.stepNumber', [index + 1])" />
@@ -43,7 +43,7 @@
   @import "@/styles/variables/_steps.scss";
   @import "@/styles/variables/_transitions.scss";
 
-  .step-selector {
+  .step-indicator {
     margin: 0;
     padding: 0;
 
