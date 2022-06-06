@@ -30,6 +30,9 @@
     "title": "You are all set!",
     "pictureAlt": "GitHub user {0}"
   },
+  "userCard": {
+    "notFound": "GitHub user not found, you can change it later"
+  },
   "validation": {
     "required": "This field is required",
     "invalidEmail": "Please type in a valid email"
