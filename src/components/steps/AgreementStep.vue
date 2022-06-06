@@ -2,6 +2,7 @@
   <div class="agreement-step">
     <InputBox
       id="email"
+      required
       :label="$t('agreementStep.email')"
       :error-message="getErrorMessage('email')"
       :value="email"
@@ -10,6 +11,7 @@
 
     <Checkbox
       id="licence-agreement"
+      required
       :label="$t('agreementStep.licenceAgreement')"
       :error-message="getErrorMessage('licenceAgreement')"
       :checked="consent"
