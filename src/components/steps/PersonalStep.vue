@@ -5,7 +5,7 @@
       :label="$t('personalStep.firstName')"
       :error-message="getErrorMessage('firstName')"
       :value="firstName"
-      @input="setFirstName"
+      @update="setFirstName"
     />
 
     <InputBox
@@ -13,7 +13,7 @@
       :label="$t('personalStep.lastName')"
       :error-message="getErrorMessage('lastName')"
       :value="lastName"
-      @input="setLastName"
+      @update="setLastName"
     />
 
     <InputBox
@@ -21,7 +21,7 @@
       :label="$t('personalStep.gitHubUser')"
       :error-message="getErrorMessage('gitHubUser')"
       :value="gitHubUser"
-      @input="setGitHubUser"
+      @update="setGitHubUser"
     />
   </div>
 </template>
@@ -32,7 +32,9 @@
 
   export default {
     name: "PersonalStep",
-    components: { InputBox },
+    components: {
+      InputBox
+    },
     props: {
       validation: {
         type: Array,
