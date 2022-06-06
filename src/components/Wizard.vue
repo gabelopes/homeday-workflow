@@ -43,14 +43,14 @@
 </template>
 
 <script>
-  import StepSelector from "@/components/StepSelector.vue";
   import Button from "@/components/Button.vue";
+  import StepIndicator from "@/components/StepIndicator.vue";
 
   export default {
     name: "Wizard",
     components: {
       Button,
-      StepSelector
+      StepIndicator
     },
     props: {
       steps: {

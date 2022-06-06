@@ -8,7 +8,8 @@ export default createStore({
     gitHubUser: "",
     gitHubPicture: "",
     email: "",
-    consent: false
+    consent: false,
+    userExists: null
   },
   getters: {
     firstName({ firstName }) {
@@ -28,6 +29,9 @@ export default createStore({
     },
     consent({ consent }) {
       return consent;
+    },
+    userExists({ userExists }) {
+      return userExists;
     }
   },
   mutations: {
@@ -48,13 +52,21 @@ export default createStore({
     },
     mutateConsent(state, consent) {
       state.consent = consent;
+    },
+    mutateUserExists(state, userExists) {
+      state.userExists = userExists;
     }
   },
   actions: {
     async fetchGitHubPicture({ commit, getters }) {
-      const user = await GitHubService.retrieveUser(getters.gitHubUser);
+      try {
+        const user = await GitHubService.retrieveUser(getters.gitHubUser);
 
-      commit("mutateGitHubPicture", user.avatar_url);
+        commit("mutateGitHubPicture", user.avatar_url);
+        commit("mutateUserExists", true);
+      } catch {
+        commit("mutateUserExists", false);
+      }
     },
 
     setFirstName({ commit }, firstName) {
