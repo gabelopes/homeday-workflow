@@ -4,6 +4,10 @@
     "title": "Licence Agreement",
     "description": "In this step, we will gather your email for future contact as well as your consent to our policies."
   },
+  "agreementStep": {
+    "email": "Email",
+    "licenceAgreement": "I agree to the Terms Of Use and Privacy Policy"
+  },
   "homeStep": {
     "intro": "Intro",
     "title": "Let's get to know you"
@@ -21,14 +25,19 @@
   "stepSelector": {
     "stepNumber": "Step {0}"
   },
+  "overviewStep": {
+    "intro": "Enjoy",
+    "title": "You are all set!",
+    "pictureAlt": "GitHub user {0}"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalidEmail": "Please type in a valid email"
+  },
   "wizard": {
     "done": "Done",
     "nextStep": "Next Step",
     "previousStep": "Previous Step",
     "start": "Start"
-  },
-  "validation": {
-    "required": "This field is required",
-    "invalidEmail": "Typed email is invalid"
   }
 }
