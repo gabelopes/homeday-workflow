@@ -10,7 +10,7 @@
 
     <div class="overview-step__user">
       <div class="overview-step__user-picture">
-        <img v-if="gitHubPicture" class="overview-step__user-picture-image" :src="gitHubPicture" alt="" />
+        <img v-if="gitHubPicture" v-lazy="gitHubPicture" class="overview-step__user-picture-image" alt="" />
 
         <span class="overview-step__user-picture-caption">{{ gitHubUser }}</span>
       </div>
