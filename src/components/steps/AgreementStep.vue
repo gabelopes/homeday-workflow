@@ -2,29 +2,33 @@
   <div class="agreement-step">
     <InputBox
       id="email"
-      :label="$t('agreementStep.firstName')"
-      :error-message="getErrorMessage('firstName')"
-      :value="firstName"
-      @input="setFirstName"
+      :label="$t('agreementStep.email')"
+      :error-message="getErrorMessage('email')"
+      :value="email"
+      @update="setEmail"
     />
 
-    <InputBox
-      id="last-name"
-      :label="$t('agreementStep.lastName')"
-      :error-message="getErrorMessage('lastName')"
-      :value="lastName"
-      @input="setLastName"
+    <Checkbox
+      id="licence-agreement"
+      :label="$t('agreementStep.licenceAgreement')"
+      :error-message="getErrorMessage('licenceAgreement')"
+      :checked="consent"
+      @update="setConsent"
     />
   </div>
 </template>
 
 <script>
   import { mapActions, mapGetters } from "vuex";
+  import Checkbox from "@/components/Checkbox.vue";
   import InputBox from "@/components/InputBox.vue";
 
   export default {
-    name: "PersonalStep",
-    components: { InputBox },
+    name: "AgreementStep",
+    components: {
+      Checkbox,
+      InputBox
+    },
     props: {
       validation: {
         type: Array,
@@ -34,10 +38,10 @@
       }
     },
     computed: {
-      ...mapGetters(["firstName", "lastName", "gitHubUser"])
+      ...mapGetters(["email", "consent"])
     },
     methods: {
-      ...mapActions(["setFirstName", "setLastName", "setGitHubUser"]),
+      ...mapActions(["setEmail", "setConsent"]),
 
       getErrorMessage(code) {
         const validationResult = this.validation.find((validationResult) => validationResult.code === code);
