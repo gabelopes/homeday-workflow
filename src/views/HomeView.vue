@@ -61,7 +61,34 @@
           {
             code: "agreement",
             sideComponent: markRaw(AgreementSidestep),
-            mainComponent: markRaw(AgreementStep)
+            mainComponent: markRaw(AgreementStep),
+            validator: () => {
+              const validationResults = [];
+              const emailRegEx = /[\w\d.-]+?@[\w\d.-]+/;
+
+              if (!this.email) {
+                validationResults.push({
+                  code: "email",
+                  errorMessage: this.$t("validation.required")
+                });
+              }
+
+              if (this.email && !emailRegEx.test(this.email)) {
+                validationResults.push({
+                  code: "email",
+                  errorMessage: this.$t("validation.invalidEmail")
+                });
+              }
+
+              if (!this.consent) {
+                validationResults.push({
+                  code: "licenceAgreement",
+                  errorMessage: this.$t("validation.required")
+                });
+              }
+
+              return validationResults;
+            }
           },
           {
             code: "overview",
@@ -71,7 +98,7 @@
       };
     },
     computed: {
-      ...mapGetters(["firstName", "lastName", "gitHubUser"])
+      ...mapGetters(["firstName", "lastName", "gitHubUser", "email", "consent"])
     }
   };
 </script>
