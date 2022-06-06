@@ -7,7 +7,7 @@
         </transition>
       </div>
 
-      <StepIndicator v-show="isSplit" :selected-index="currentStepIndex" :steps="steps" />
+      <StepIndicator v-if="isSplit" :selected-index="currentStepIndex" :steps="steps" />
 
       <transition name="fade-delay-enter">
         <div v-if="!isSplit && !isLastStep" class="wizard__stage-controls">
@@ -116,17 +116,6 @@
         this.mutateStep(stepIndex, "commit:step");
       },
 
-      configureStep() {
-        const stepIndex = this.getStepIndex(this.step);
-        const invalidStepIndex = this.findInvalidStepIndexBefore(stepIndex);
-
-        if (invalidStepIndex >= 0) {
-          this.rollbackStep(invalidStepIndex);
-        } else {
-          this.commitStep(stepIndex);
-        }
-      },
-
       findInvalidStepIndexBefore(stepIndex) {
         if (stepIndex < 0) {
           return -1;
@@ -170,16 +159,31 @@
         this.commitStep(this.currentStepIndex - 1);
       },
 
+      reportStep() {
+        const stepIndex = this.getStepIndex(this.step);
+        const invalidStepIndex = this.findInvalidStepIndexBefore(stepIndex);
+
+        if (stepIndex < 0) {
+          return this.commitStep(0);
+        }
+
+        if (invalidStepIndex >= 0) {
+          this.rollbackStep(invalidStepIndex);
+        } else {
+          this.commitStep(stepIndex);
+        }
+      },
+
       rollbackStep(stepIndex) {
         this.mutateStep(stepIndex, "rollback:step");
       }
     },
     created() {
-      this.configureStep();
+      this.reportStep();
     },
     watch: {
       step() {
-        this.configureStep();
+        this.reportStep();
       }
     }
   };
