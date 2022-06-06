@@ -46,6 +46,7 @@
 
 <style lang="scss" scoped>
   @import "@/styles/mixins/_breakpoints.scss";
+  @import "@/styles/mixins/_fonts.scss";
   @import "@/styles/mixins/_layout.scss";
   @import "@/styles/variables/_colors.scss";
   @import "@/styles/variables/_fonts.scss";
@@ -53,18 +54,29 @@
   .input-box {
     @include flex-box($direction: column);
 
+    width: 100%;
+
     > :not(:last-child) {
-      margin-bottom: 10px;
+      margin-bottom: $space * 3;
     }
 
     &__label {
       font-weight: $bold-weight;
+
+      &-required {
+        @include font-size();
+
+        color: $red;
+      }
     }
 
     &__input {
-      border-radius: 12px;
-      border: 2px solid $dark-gray;
+      @include padding($small);
+
+      border-radius: $space * 2;
+      border: $border-width solid $dark-gray;
       background-color: transparent;
+      width: 100%;
 
       &:focus {
         outline: none;
@@ -77,17 +89,11 @@
       &--error {
         border-color: $red;
       }
-
-      @include mobile() {
-        padding: 15px 20px;
-      }
-
-      @include tablet() {
-        padding: 20px 30px;
-      }
     }
 
     &__error {
+      @include font-size($small-font);
+
       color: $red;
     }
   }

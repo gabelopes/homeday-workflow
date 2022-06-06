@@ -48,7 +48,10 @@
 
   export default {
     name: "Wizard",
-    components: { Button, StepSelector },
+    components: {
+      Button,
+      StepSelector
+    },
     props: {
       steps: {
         type: Array,
@@ -126,9 +129,10 @@
   @import "@/styles/mixins/_layout.scss";
   @import "@/styles/mixins/_transitions.scss";
   @import "@/styles/variables/_colors.scss";
+  @import "@/styles/variables/_steps.scss";
   @import "@/styles/variables/_transitions.scss";
 
-  @include fade(0.25s);
+  @include fade($quarter-transition-duration);
   @include fade-slide();
   @include reveal();
 
@@ -156,11 +160,15 @@
         flex-shrink: 0;
 
         @include mobile() {
-          padding-bottom: 50px;
+          padding-bottom: $step-size-mobile / 2;
         }
 
         @include tablet() {
-          padding-right: 50px;
+          padding-right: $step-size-tablet / 2;
+        }
+
+        @include desktop() {
+          padding-right: $step-size-desktop / 2;
         }
       }
 
@@ -169,17 +177,22 @@
         @include flex-box(center, center, column);
 
         @include mobile() {
-          padding-top: 50px;
+          padding-top: $step-size-mobile / 2;
         }
 
         @include tablet() {
-          padding-left: 50px;
+          padding-left: $step-size-tablet / 2;
+        }
+
+        @include desktop() {
+          padding-left: $step-size-desktop / 2;
         }
       }
 
       &--secondary & {
         &-component {
-          height: 100%;
+          @include box(100%);
+          @include flex-box(center, center);
         }
 
         &-controls {
@@ -190,7 +203,7 @@
       }
 
       &--sidebar {
-        box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.35);
+        box-shadow: 0 0 ($space * 2) 0 rgba(0, 0, 0, 0.35);
         transition: box-shadow $double-transition-duration;
 
         @include mobile() {
@@ -210,18 +223,10 @@
       }
 
       &-controls {
-        padding: 30px;
+        @include padding();
 
         > :not(:last-child) {
-          margin-right: 30px;
-        }
-
-        @include tablet() {
-          padding: 40px;
-        }
-
-        @include desktop() {
-          padding: 80px;
+          margin-right: $space * 5;
         }
       }
     }

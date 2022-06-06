@@ -16,9 +16,9 @@
       },
       size: {
         type: String,
-        default: "medium",
+        default: "regular",
         validator(type) {
-          return ["small", "medium", "big"].includes(type);
+          return ["tiny", "small", "regular", "medium", "big"].includes(type);
         }
       }
     }
@@ -30,27 +30,41 @@
   @import "@/styles/mixins/_layout.scss";
 
   .icon {
-    &--small {
-      @include box(20px);
+    @include box($sizing * 20);
+
+    @include desktop() {
+      @include box($sizing * 30);
+    }
+
+    &--tiny {
+      @include box($sizing * 2);
 
       @include desktop() {
-        @include box(30px);
+        @include box($sizing * 3);
+      }
+    }
+
+    &--small {
+      @include box($sizing * 8);
+
+      @include desktop() {
+        @include box($sizing * 12);
       }
     }
 
     &--medium {
-      @include box(150px);
+      @include box($sizing * 30);
 
       @include desktop() {
-        @include box(200px);
+        @include box($sizing * 40);
       }
     }
 
     &--big {
-      @include box(200px);
+      @include box($sizing * 40);
 
       @include desktop() {
-        @include box(300px);
+        @include box($sizing * 50);
       }
     }
   }

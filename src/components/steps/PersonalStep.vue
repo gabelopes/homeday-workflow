@@ -57,14 +57,21 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "@/styles/mixins/_breakpoints.scss";
   @import "@/styles/mixins/_layout.scss";
+  @import "@/styles/variables/_layout.scss";
 
   .personal-step {
     @include box(100%);
-    @include flex-box(center, center, column);
+    @include flex-box(flex-start, center, column);
+    @include padding();
+
+    @include desktop() {
+      @include box(75%, 100%);
+    }
 
     > :not(:last-child) {
-      margin-bottom: 20px;
+      margin-bottom: $space * 5;
     }
   }
 </style>
