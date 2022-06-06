@@ -1,6 +1,7 @@
 @import "@/styles/mixins/_breakpoints.scss";
+@import "@/styles/variables/_transitions.scss";
 
-@mixin fade($duration: 1s) {
+@mixin fade($duration: $regular-transition-duration) {
   .fade {
     &-enter-from,
     &-leave-to {
@@ -14,7 +15,24 @@
   }
 }
 
-@mixin fade-slide($duration: 0.5s) {
+@mixin fade-delay-enter($duration: $regular-transition-duration, $delay: $regular-transition-duration) {
+  .fade-delay-enter {
+    &-enter-from,
+    &-leave-to {
+      opacity: 0;
+    }
+
+    &-enter-active {
+      transition: opacity $duration $delay;
+    }
+
+    &-leave-active {
+      transition: opacity $duration;
+    }
+  }
+}
+
+@mixin fade-slide($duration: $regular-transition-duration) {
   .fade-slide {
     &-enter-from {
       opacity: 0;
@@ -33,7 +51,7 @@
   }
 }
 
-@mixin reveal($duration: 1s) {
+@mixin reveal($duration: $regular-transition-duration) {
   .reveal {
     &-enter-from,
     &-leave-to {

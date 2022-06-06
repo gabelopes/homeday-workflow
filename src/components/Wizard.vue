@@ -9,7 +9,7 @@
 
       <StepSelector v-show="isSplit" :selected-index="currentStepIndex" :steps="steps" />
 
-      <transition name="fade">
+      <transition name="fade-delay-enter">
         <div v-if="!isSplit && !isLastStep" class="wizard__stage-controls">
           <Button v-if="!isFirstStep" @click="previousStep" type="secondary">{{ $t("wizard.previousStep") }}</Button>
 
@@ -133,8 +133,9 @@
   @import "@/styles/variables/_steps.scss";
   @import "@/styles/variables/_transitions.scss";
 
-  @include fade($quarter-transition-duration);
-  @include fade-slide();
+  @include fade($half-transition-duration);
+  @include fade-delay-enter($half-transition-duration, $half-transition-duration);
+  @include fade-slide($half-transition-duration);
   @include reveal();
 
   .wizard {
@@ -151,6 +152,8 @@
     }
 
     &__stage {
+      @include flex-box(center, center, $direction: column);
+
       &--primary {
         @include box(100%);
         @include flex-box(center, center, column);
@@ -158,6 +161,7 @@
         background-color: $primary-background-color;
         flex-shrink: 0;
         position: relative;
+        transition: all $regular-transition-duration;
 
         @include mobile() {
           padding-bottom: $step-outer-border-size + $step-size-mobile / 2;
@@ -208,7 +212,6 @@
 
       &--sidebar {
         box-shadow: 0 0 ($space * 2) 0 rgba(0, 0, 0, 0.35);
-        transition: box-shadow $double-transition-duration;
 
         @include mobile() {
           height: 25%;

@@ -1,4 +1,4 @@
-$transition-duration: 1s;
-$quarter-transition-duration: $transition-duration / 4;
-$half-transition-duration: $transition-duration / 2;
-$double-transition-duration: $transition-duration * 2;
+$regular-transition-duration: 1s;
+$quarter-transition-duration: $regular-transition-duration / 4;
+$half-transition-duration: $regular-transition-duration / 2;
+$double-transition-duration: $regular-transition-duration * 2;
