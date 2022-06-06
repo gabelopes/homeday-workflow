@@ -2,6 +2,7 @@
   <div class="personal-step">
     <InputBox
       id="first-name"
+      required
       :label="$t('personalStep.firstName')"
       :error-message="getErrorMessage('firstName')"
       :value="firstName"
@@ -10,6 +11,7 @@
 
     <InputBox
       id="last-name"
+      required
       :label="$t('personalStep.lastName')"
       :error-message="getErrorMessage('lastName')"
       :value="lastName"
@@ -18,6 +20,7 @@
 
     <InputBox
       id="github-user"
+      required
       :label="$t('personalStep.gitHubUser')"
       :error-message="getErrorMessage('gitHubUser')"
       :value="gitHubUser"

@@ -2,7 +2,7 @@
   <div class="input-box">
     <label :for="id" class="input-box__label">
       {{ label }}
-      <sup class="input-box__label-required">*</sup>
+      <sup v-if="required" class="input-box__label-required" data-test="required-asterisk">*</sup>
     </label>
 
     <input
@@ -18,7 +18,7 @@
       type="text"
     />
 
-    <span v-if="isError" class="input-box__error">
+    <span v-if="isError" class="input-box__error" data-test="error-message">
       {{ errorMessage }}
     </span>
   </div>
