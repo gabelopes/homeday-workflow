@@ -42,6 +42,10 @@ export default createStore({
       state.lastName = lastName;
     },
     mutateGitHubUser(state, gitHubUser) {
+      if (gitHubUser !== state.gitHubUser) {
+        state.gitHubPicture = "";
+      }
+
       state.gitHubUser = gitHubUser;
     },
     mutateGitHubPicture(state, gitHubPicture) {
@@ -65,6 +69,7 @@ export default createStore({
         commit("mutateGitHubPicture", user.avatar_url);
         commit("mutateUserExists", true);
       } catch {
+        commit("mutateGitHubPicture", "");
         commit("mutateUserExists", false);
       }
     },
